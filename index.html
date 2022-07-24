@@ -8,10 +8,10 @@
 <body>
     <h1>Movie Finder</h1>
     <p>The Movie Datebase API is used for movie info</p>
-    <form action="/url" method="GET">
+    <form id = "searchbar">
 
     <p>Search for a movie!</p>
-    <input type="text" name="movie_title" placeholder="Movie Title" required>
+    <input type="text" id="searchtext" placeholder="Movie Title" required>
     <button type="submit">Search</button>
     </form>
     <div id="movie">
@@ -19,13 +19,22 @@
     </div>
     
 <script>
-    findMovie("https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=Jack+Reacher");
+    const searchbar = document.getElementById("searchbar");
+    const searchtext = document.getElementById("searchtext");
+    const searchurl = "https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=";
+    
     function findMovie(url) {
         fetch(url).then(result => result.json()).then(data => {
-            console.log(data.results[1].title);
-            document.getElementById('movie').innerHTML = data.results[1].title;
+            console.log(data.results[0].title);
+            document.getElementById('movie').innerHTML = data.results[0].title;
         })
     }
+    searchbar.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const search = searchtext.value;
+        findMovie(searchurl + search);
+    })
 </script>
 </body>
 </html>
