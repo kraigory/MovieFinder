@@ -19,13 +19,13 @@
     </div>
     
 <script>
-    findMovie(https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=Jack+Reacher);
+    findMovie("https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=Jack+Reacher");
     function findMovie(url) {
         fetch(url).then(result => result.json()).then(data => {
-            let title = data.title;
-            document.getElementById('movie').innerHTML = title;
+            console.log(data.results[1].title);
+            document.getElementById('movie').innerHTML = data.results[1].title;
         })
-    })
+    }
 </script>
 </body>
 </html>
