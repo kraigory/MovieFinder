@@ -23,17 +23,23 @@
     const searchtext = document.getElementById("searchtext");
     const searchurl = "https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=";
     
-    function findMovie(url) {
+    function findMovies(url) {
+        document.getElementById('movie').innerHTML = "";
         fetch(url).then(result => result.json()).then(data => {
-            console.log(data.results[0].title);
-            document.getElementById('movie').innerHTML = data.results[0].title;
+            for (let i = 0; i < data.total_results; i++) {
+                displayMovie(data.results[i]);
+            }
         })
+    }
+    function displayMovie(movie) {
+        console.log(movie.title);
+        document.getElementById('movie').innerHTML += "<div>" + movie.title + "</div>";
     }
     searchbar.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const search = searchtext.value;
-        findMovie(searchurl + search);
+        findMovies(searchurl + search);
     })
 </script>
 </body>
