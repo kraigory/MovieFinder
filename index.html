@@ -27,8 +27,12 @@
     function findMovies(url) {
         document.getElementById("movie").innerHTML = "";
         fetch(url).then(result => result.json()).then(data => {
-            for (let i = 0; i < data.total_results; i++) {
-                displayMovie(data.results[i]);
+            if (data.total_results > 0) {
+                for (let i = 0; i < data.total_results; i++) {
+                   displayMovie(data.results[i]);
+                }
+            } else {
+                document.getElementById("movie").innerHTML = "Sorry, no movie found :(";
             }
         })
     }
