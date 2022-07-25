@@ -1,3 +1,6 @@
+<!--this page has a search bar that takes in user input and appends it to a search api call to 
+    tmbd that returns a list of movie/info based of the search input. This page will display
+    the title, overview of the movie and the poster page-->
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -7,8 +10,10 @@
         <link rel="stylesheet" href="style.css"> 
     </head>
     <body>
+        <!--page title and reference to tmbd-->
         <h1>Movie Finder</h1>
         <p>The Movie Datebase API is used for movie info</p>
+        <!--search bar form that requires text to search-->
         <form id = "searchbar">
             <p>Search for a movie!</p>
             <input type="text" id="searchtext" placeholder="Movie Title" required>
@@ -19,32 +24,44 @@
         </main>
     
         <script>
+            //gets the form containing the search bar element
             const searchbar = document.getElementById("searchbar");
+            //gets the part of the searchbox that contains the user text when searching
             const searchtext = document.getElementById("searchtext");
+            //url that does the movie search using tmbd--just add user search to the end
             const searchurl = "https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=";
+            //gets the poster image from tmbd--just add /{poster path} to the end
             const imageurl = "https://image.tmdb.org/t/p/w342";
     
+            //this function takes in a url, fetches the url and handles the json response
             function findMovies(url) {
+                //resets movie list field when searching
                 document.getElementById("movie").innerHTML = "";
+                //fetch using the given url
                 fetch(url).then(result => result.json()).then(data => {
+                    //if there are movies given back call display with the movie results for every movie
                     if (data.total_results > 0) {
                         for (let i = 0; i < data.total_results; i++) {
                         displayMovie(data.results[i]);
                     }
+                    //else diplay no movies :(
                     } else {
                         document.getElementById("movie").innerHTML = "Sorry, no movie found :(";
                     }
                 })
             }
+            //displays poster image, title and movie overview
             function displayMovie(movie) {
-                console.log(movie.title);
+                //adds a moviedisplay class to the movie section containing the image, title and overview
                 document.getElementById("movie").innerHTML += 
                     '<div class="moviedisplay">' + 
                     "<img src=" + imageurl + movie.poster_path + "><div><h2>" + 
                     movie.title + "<h2></div>" + movie.overview + "</div>";
             }
+            //adds event to the search bar when submit button is pressed
             searchbar.addEventListener("submit", (e) => {
                 e.preventDefault();
+                //gets the text from the search bar and calls the findmovies function with the text appended to search url
                 const search = searchtext.value;
                 findMovies(searchurl + search);
             })

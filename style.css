@@ -1,21 +1,26 @@
+/*changes the pages background to a deep purple and text to offwhite*/
 html {
     background-color: #422b59;
     color:antiquewhite;
 }
+/*positions the title and search bar to center*/
 body {
     max-width: max-content;
     margin: auto;
 }
+/*this makes the movies display side by side and vertically*/
 main {
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
 }
+/*gives a max width to title and overview text*/
 .moviedisplay {
     padding: 5px;
     width:250px;
     background-color: black;
 }
+/*gives a max width to the poster size*/
 .moviedisplay img {
     width:250px;
 }
