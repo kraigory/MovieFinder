@@ -1,0 +1,21 @@
+html {
+    background-color: #422b59;
+    color:antiquewhite;
+}
+body {
+    max-width: max-content;
+    margin: auto;
+}
+main {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.moviedisplay {
+    padding: 5px;
+    width:250px;
+    background-color: black;
+}
+.moviedisplay img {
+    width:250px;
+}

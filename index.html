@@ -1,51 +1,53 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Movie Finder</h1>
-    <p>The Movie Datebase API is used for movie info</p>
-    <form id = "searchbar">
-
-    <p>Search for a movie!</p>
-    <input type="text" id="searchtext" placeholder="Movie Title" required>
-    <button type="submit">Search</button>
-    </form>
-    <div id="movie">
-        <!-- placeholder to put movie info -->
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css"> 
+    </head>
+    <body>
+        <h1>Movie Finder</h1>
+        <p>The Movie Datebase API is used for movie info</p>
+        <form id = "searchbar">
+            <p>Search for a movie!</p>
+            <input type="text" id="searchtext" placeholder="Movie Title" required>
+            <button type="submit">Search</button>
+        </form>
+        <main id="movie">
+            <!-- placeholder to put movie info -->
+        </main>
     
-<script>
-    const searchbar = document.getElementById("searchbar");
-    const searchtext = document.getElementById("searchtext");
-    const searchurl = "https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=";
-    const imageurl = "https://image.tmdb.org/t/p/w500";
+        <script>
+            const searchbar = document.getElementById("searchbar");
+            const searchtext = document.getElementById("searchtext");
+            const searchurl = "https://api.themoviedb.org/3/search/movie?api_key=21ebf41aaa981f74234d3d52f43b1faf&query=";
+            const imageurl = "https://image.tmdb.org/t/p/w342";
     
-    function findMovies(url) {
-        document.getElementById("movie").innerHTML = "";
-        fetch(url).then(result => result.json()).then(data => {
-            if (data.total_results > 0) {
-                for (let i = 0; i < data.total_results; i++) {
-                   displayMovie(data.results[i]);
-                }
-            } else {
-                document.getElementById("movie").innerHTML = "Sorry, no movie found :(";
+            function findMovies(url) {
+                document.getElementById("movie").innerHTML = "";
+                fetch(url).then(result => result.json()).then(data => {
+                    if (data.total_results > 0) {
+                        for (let i = 0; i < data.total_results; i++) {
+                        displayMovie(data.results[i]);
+                    }
+                    } else {
+                        document.getElementById("movie").innerHTML = "Sorry, no movie found :(";
+                    }
+                })
             }
-        })
-    }
-    function displayMovie(movie) {
-        console.log(movie.title);
-        document.getElementById("movie").innerHTML += "<div>" + movie.title + "</div> <img src=" + imageurl + movie.poster_path + ">";
-    }
-    searchbar.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const search = searchtext.value;
-        findMovies(searchurl + search);
-    })
-</script>
-</body>
+            function displayMovie(movie) {
+                console.log(movie.title);
+                document.getElementById("movie").innerHTML += 
+                    '<div class="moviedisplay">' + 
+                    "<img src=" + imageurl + movie.poster_path + "><div><h2>" + 
+                    movie.title + "<h2></div>" + movie.overview + "</div>";
+            }
+            searchbar.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const search = searchtext.value;
+                findMovies(searchurl + search);
+            })
+        </script>
+    </body>
 </html>
